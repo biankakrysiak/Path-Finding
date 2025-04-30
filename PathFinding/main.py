@@ -50,8 +50,8 @@ def main():
 def drawBoardState(screen, bs):
     drawBoard(screen, bs)
     drawUsed(screen,bs)
-    drawEnd(screen, bs)
     drawPlayer(screen, bs)
+    drawEnd(screen, bs)
 
 def drawBoard(screen, bs):
     for r in range(DIMENSIONS):
