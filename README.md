@@ -1,2 +1,2 @@
 # Path-Finding
-Path finding wykorzystujący algorytm A*
+Path finding wykorzystujący algorytm A* i Dijkstra
