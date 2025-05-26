@@ -1,7 +1,6 @@
 import pygame as p
 from PathFinding import engine
 
-# Config
 SIDEBAR_WIDTH = 250
 SQR_SIZE = 4
 DIMENSIONS = 200
@@ -34,7 +33,6 @@ def main():
     restart_button = p.Rect(30, HEIGHT - 70, 190, 40)
     started = False
     
-    # Ustawienia zoomowania
     zoom = FINAL_ZOOM
     follow = False
 
@@ -61,7 +59,6 @@ def main():
             zoom = FINAL_ZOOM
             follow = False
 
-        # Determine camera offset
         if started and follow and (bs.playerPos != bs.end or bs.playerPos2 != bs.end):
             avg_x = (bs.playerPos[1] + bs.playerPos2[1]) // 2
             avg_y = (bs.playerPos[0] + bs.playerPos2[0]) // 2
@@ -86,7 +83,7 @@ def main():
         clock.tick(FPS)
 
 def drawBoard(screen, bs, offset_x, offset_y, zoom):
-    sqr_size_scaled = int(SQR_SIZE * zoom) + 1  # +1 piksel nakładania
+    sqr_size_scaled = int(SQR_SIZE * zoom) + 1 
     for r in range(DIMENSIONS):
         for c in range(DIMENSIONS):
             texture = bs.board[r][c]
@@ -165,19 +162,15 @@ def drawSidebar(screen, bs, start_button, restart_button, started):
         screen.blit(font.render(f"Steps: {len(bs.moveLog)}", True, (200, 0, 0)), (padding + 10, astar_y + 25))
         screen.blit(font.render(f"Path cost: {bs.getScore()}", True, (200, 0, 0)), (padding + 10, astar_y + 45))
         
-        
-        # Tekstury dla A* - w dwóch wierszach
         texture_y = astar_y + 65
         screen.blit(font.render("Terrain usage:", True, (150, 0, 0)), (padding + 10, texture_y))
         
-        # Pierwszy wiersz: grass i sand
         row1_y = texture_y + 20
         grass_count = bs.texture_count[1]
         sand_count = bs.texture_count[2]
         screen.blit(font.render(f"grass: {grass_count}", True, (200, 0, 0)), (padding + 15, row1_y))
         screen.blit(font.render(f"sand: {sand_count}", True, (200, 0, 0)), (padding + 90, row1_y))
         
-        # Drugi wiersz: mud i rocks
         row2_y = texture_y + 38
         mud_count = bs.texture_count[3]
         rocks_count = bs.texture_count[4]
@@ -186,27 +179,22 @@ def drawSidebar(screen, bs, start_button, restart_button, started):
 
         screen.blit(font.render(f"Time: {bs.astar_time:.4f}s", True, (200, 0, 0)), (padding + 10, astar_y + 120))
 
-        # Odstęp między algorytmami
-        dijkstra_y = astar_y + 160  # 120 (ostatni element) + 40 odstępu
+        dijkstra_y = astar_y + 160
 
-        # Statystyki Dijkstra (niebieskie)
         screen.blit(bold_font.render("Dijkstra Algorithm:", True, (0, 0, 150)), (padding, dijkstra_y))
         screen.blit(font.render(f"Steps: {len(bs.moveLog2)}", True, (0, 0, 200)), (padding + 10, dijkstra_y + 25))
         cost_dijkstra = sum(bs.board_difficulty[r][c] for r, c in bs.moveLog2)
         screen.blit(font.render(f"Path cost: {cost_dijkstra}", True, (0, 0, 200)), (padding + 10, dijkstra_y + 45))
         
-        # Tekstury dla Dijkstra - w dwóch wierszach
         texture2_y = dijkstra_y + 65
         screen.blit(font.render("Terrain usage:", True, (0, 0, 150)), (padding + 10, texture2_y))
         
-        # Pierwszy wiersz: grass i sand
         row1_y_d = texture2_y + 20
         grass_count2 = bs.texture_count2[1]
         sand_count2 = bs.texture_count2[2]
         screen.blit(font.render(f"grass: {grass_count2}", True, (0, 0, 200)), (padding + 15, row1_y_d))
         screen.blit(font.render(f"sand: {sand_count2}", True, (0, 0, 200)), (padding + 90, row1_y_d))
         
-        # Drugi wiersz: mud i rocks
         row2_y_d = texture2_y + 38
         mud_count2 = bs.texture_count2[3]
         rocks_count2 = bs.texture_count2[4]
@@ -215,12 +203,9 @@ def drawSidebar(screen, bs, start_button, restart_button, started):
         
         screen.blit(font.render(f"Time: {bs.dijkstra_time:.4f}s", True, (0, 0, 200)), (padding + 10, dijkstra_y + 120))
 
-
-    # Przyciski
     start_button.y = HEIGHT - 120
     restart_button.y = HEIGHT - 70
 
-    # Draw start button
     button_color = (180, 255, 180) if not started else (180, 180, 180)
     p.draw.rect(screen, button_color, start_button, border_radius=6)
     if not started:
@@ -231,7 +216,6 @@ def drawSidebar(screen, bs, start_button, restart_button, started):
         btn_label = "Running..."
     screen.blit(bold_font.render(btn_label, True, (0, 0, 0)), (start_button.x + 15, start_button.y + 10))
 
-    # Draw restart button
     restart_color = (255, 200, 200)
     p.draw.rect(screen, restart_color, restart_button, border_radius=6)
     screen.blit(bold_font.render("Restart", True, (0, 0, 0)), (restart_button.x + 15, restart_button.y + 10))
