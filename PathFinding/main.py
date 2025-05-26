@@ -12,6 +12,7 @@ INITIAL_ZOOM = WIDTH / DIMENSIONS
 FPS = 60
 IMAGES = {}
 
+
 def loadImages():
     textures = ['grass', 'mud', 'rocks', 'sand']
     for texture in textures:
@@ -83,7 +84,11 @@ def main():
         clock.tick(FPS)
 
 def drawBoard(screen, bs, offset_x, offset_y, zoom):
+<<<<<<< HEAD
     sqr_size_scaled = int(SQR_SIZE * zoom) + 1 
+=======
+    sqr_size_scaled = int(SQR_SIZE * zoom) + 1
+>>>>>>> e95faa4 (Local changes before rebase)
     for r in range(DIMENSIONS):
         for c in range(DIMENSIONS):
             texture = bs.board[r][c]
@@ -156,7 +161,6 @@ def drawSidebar(screen, bs, start_button, restart_button, started):
     screen.blit(header_font.render("Results", True, (0, 0, 0)), (padding, result_y))
 
     if bs.started:
-        # Statystyki A* (czerwone)
         astar_y = result_y + 35
         screen.blit(bold_font.render("A* Algorithm:", True, (150, 0, 0)), (padding, astar_y))
         screen.blit(font.render(f"Steps: {len(bs.moveLog)}", True, (200, 0, 0)), (padding + 10, astar_y + 25))
